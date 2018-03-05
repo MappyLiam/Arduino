@@ -1,16 +1,16 @@
 /*
-  Comparing Strings
+ Comparing Strings
 
-  Examples of how to compare Strings using the comparison operators
+ Examples of how to compare Strings using the comparison operators
 
-  created 27 Jul 2010
-  modified 2 Apr 2012
-  by Tom Igoe
+ created 27 Jul 2010
+ modified 2 Apr 2012
+ by Tom Igoe
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/StringComparisonOperators
-*/
+ http://www.arduino.cc/en/Tutorial/StringComparisonOperators
+ */
 
 String stringOne, stringTwo;
 
@@ -20,7 +20,6 @@ void setup() {
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
-
 
   stringOne = String("this");
   stringTwo = String("that");
@@ -67,8 +66,6 @@ void loop() {
     Serial.println(stringOne + " = " + numberOne);
   }
 
-
-
   // two numeric Strings compared:
   stringOne = "2";
   stringTwo = "1";
@@ -89,7 +86,6 @@ void loop() {
   if (stringOne <= "Browne") {
     Serial.println(stringOne + " <= Browne");
   }
-
 
   if (stringOne >= "Brow") {
     Serial.println(stringOne + " >= Brow");

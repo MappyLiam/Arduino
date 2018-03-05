@@ -1,16 +1,16 @@
 /*
-  Appending to Strings using the += operator and concat()
+ Appending to Strings using the += operator and concat()
 
-  Examples of how to append different data types to Strings
+ Examples of how to append different data types to Strings
 
-  created 27 Jul 2010
-  modified 2 Apr 2012
-  by Tom Igoe
+ created 27 Jul 2010
+ modified 2 Apr 2012
+ by Tom Igoe
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/StringAppendOperator
-*/
+ http://www.arduino.cc/en/Tutorial/StringAppendOperator
+ */
 
 String stringOne, stringTwo;
 
@@ -68,5 +68,6 @@ void loop() {
   Serial.println(stringTwo); // prints "The millis(): 43534" or whatever the value of the millis() is
 
   // do nothing while true:
-  while (true);
+  while (true)
+    ;
 }

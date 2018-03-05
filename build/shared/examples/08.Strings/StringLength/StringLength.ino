@@ -1,16 +1,16 @@
 /*
-  String length()
+ String length()
 
-  Examples of how to use length() in a String.
-  Open the Serial Monitor and start sending characters to see the results.
+ Examples of how to use length() in a String.
+ Open the Serial Monitor and start sending characters to see the results.
 
-  created 1 Aug 2010
-  by Tom Igoe
+ created 1 Aug 2010
+ by Tom Igoe
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/StringLengthTrim
-*/
+ http://www.arduino.cc/en/Tutorial/StringLengthTrim
+ */
 
 String txtMsg = "";                         // a string for incoming text
 unsigned int lastStringLength = txtMsg.length();     // previous length of the String

@@ -1,28 +1,28 @@
 /*
-  Arduino Starter Kit example
-  Project 9 - Motorized Pinwheel
+ Arduino Starter Kit example
+ Project 9 - Motorized Pinwheel
 
-  This sketch is written to accompany Project 9 in the Arduino Starter Kit
+ This sketch is written to accompany Project 9 in the Arduino Starter Kit
 
-  Parts required:
-  - 10 kilohm resistor
-  - pushbutton
-  - motor
-  - 9V battery
-  - IRF520 MOSFET
-  - 1N4007 diode
+ Parts required:
+ - 10 kilohm resistor
+ - pushbutton
+ - motor
+ - 9V battery
+ - IRF520 MOSFET
+ - 1N4007 diode
 
-  created 13 Sep 2012
-  by Scott Fitzgerald
+ created 13 Sep 2012
+ by Scott Fitzgerald
 
-  http://www.arduino.cc/starterKit
+ http://www.arduino.cc/starterKit
 
-  This example code is part of the public domain.
-*/
+ This example code is part of the public domain.
+ */
 
 // named constants for the switch and motor pins
 const int switchPin = 2; // the number of the switch pin
-const int motorPin =  9; // the number of the motor pin
+const int motorPin = 9; // the number of the motor pin
 
 int switchState = 0;  // variable for reading the switch's status
 

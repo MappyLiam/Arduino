@@ -39,7 +39,6 @@
 #include "Arduino.h"
 #undef SERIAL
 
-
 #define PROG_FLICKER true
 
 // Configure SPI clock (in Hz).
@@ -51,7 +50,6 @@
 // A clock slow enough for an ATtiny85 @ 1 MHz, is a reasonable default:
 
 #define SPI_CLOCK 		(1000000/6)
-
 
 // Select hardware or software SPI, depending on SPI clock.
 // Currently only for AVR, for other architectures (Due, Zero,...), hardware SPI
@@ -117,7 +115,6 @@
 #undef USE_HARDWARE_SPI
 #endif
 
-
 // Configure the serial port to use.
 //
 // Prefer the USB virtual serial port (aka. native USB port), if the Arduino has one:
@@ -136,13 +133,11 @@
 #define SERIAL Serial
 #endif
 
-
 // Configure the baud rate:
 
 #define BAUDRATE	19200
 // #define BAUDRATE	115200
 // #define BAUDRATE	1000000
-
 
 #define HWVER 2
 #define SWMAJ 1
@@ -165,51 +160,54 @@ void pulse(int pin, int times);
 #define SPI_MODE0 0x00
 
 class SPISettings {
-  public:
-    // clock is in Hz
-    SPISettings(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) : clock(clock) {
-      (void) bitOrder;
-      (void) dataMode;
-    };
+public:
+  // clock is in Hz
+  SPISettings(uint32_t clock, uint8_t bitOrder, uint8_t dataMode) :
+      clock(clock) {
+    (void) bitOrder;
+    (void) dataMode;
+  }
+  ;
 
-  private:
-    uint32_t clock;
+private:
+  uint32_t clock;
 
-    friend class BitBangedSPI;
+  friend class BitBangedSPI;
 };
 
 class BitBangedSPI {
-  public:
-    void begin() {
-      digitalWrite(PIN_SCK, LOW);
-      digitalWrite(PIN_MOSI, LOW);
-      pinMode(PIN_SCK, OUTPUT);
-      pinMode(PIN_MOSI, OUTPUT);
-      pinMode(PIN_MISO, INPUT);
+public:
+  void begin() {
+    digitalWrite(PIN_SCK, LOW);
+    digitalWrite(PIN_MOSI, LOW);
+    pinMode(PIN_SCK, OUTPUT);
+    pinMode(PIN_MOSI, OUTPUT);
+    pinMode(PIN_MISO, INPUT);
+  }
+
+  void beginTransaction(SPISettings settings) {
+    pulseWidth = (500000 + settings.clock - 1) / settings.clock;
+    if (pulseWidth == 0)
+      pulseWidth = 1;
+  }
+
+  void end() {
+  }
+
+  uint8_t transfer(uint8_t b) {
+    for (unsigned int i = 0; i < 8; ++i) {
+      digitalWrite(PIN_MOSI, (b & 0x80) ? HIGH : LOW);
+      digitalWrite(PIN_SCK, HIGH);
+      delayMicroseconds(pulseWidth);
+      b = (b << 1) | digitalRead(PIN_MISO);
+      digitalWrite(PIN_SCK, LOW); // slow pulse
+      delayMicroseconds(pulseWidth);
     }
+    return b;
+  }
 
-    void beginTransaction(SPISettings settings) {
-      pulseWidth = (500000 + settings.clock - 1) / settings.clock;
-      if (pulseWidth == 0)
-        pulseWidth = 1;
-    }
-
-    void end() {}
-
-    uint8_t transfer (uint8_t b) {
-      for (unsigned int i = 0; i < 8; ++i) {
-        digitalWrite(PIN_MOSI, (b & 0x80) ? HIGH : LOW);
-        digitalWrite(PIN_SCK, HIGH);
-        delayMicroseconds(pulseWidth);
-        b = (b << 1) | digitalRead(PIN_MISO);
-        digitalWrite(PIN_SCK, LOW); // slow pulse
-        delayMicroseconds(pulseWidth);
-      }
-      return b;
-    }
-
-  private:
-    unsigned long pulseWidth; // in microseconds
+private:
+  unsigned long pulseWidth; // in microseconds
 };
 
 static BitBangedSPI SPI;
@@ -249,8 +247,7 @@ typedef struct param {
   uint16_t pagesize;
   uint16_t eepromsize;
   uint32_t flashsize;
-}
-parameter;
+} parameter;
 
 parameter param;
 
@@ -263,8 +260,10 @@ void heartbeat() {
   if ((now - last_time) < 40)
     return;
   last_time = now;
-  if (hbval > 192) hbdelta = -hbdelta;
-  if (hbval < 32) hbdelta = -hbdelta;
+  if (hbval > 192)
+    hbdelta = -hbdelta;
+  if (hbval < 32)
+    hbdelta = -hbdelta;
   hbval += hbdelta;
   analogWrite(LED_HB, hbval);
 }
@@ -297,7 +296,8 @@ void loop(void) {
 }
 
 uint8_t getch() {
-  while (!SERIAL.available());
+  while (!SERIAL.available())
+    ;
   return SERIAL.read();
 }
 void fill(int n) {
@@ -331,22 +331,22 @@ uint8_t spi_transaction(uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
 
 void empty_reply() {
   if (CRC_EOP == getch()) {
-    SERIAL.print((char)STK_INSYNC);
-    SERIAL.print((char)STK_OK);
+    SERIAL.print((char) STK_INSYNC);
+    SERIAL.print((char) STK_OK);
   } else {
     error++;
-    SERIAL.print((char)STK_NOSYNC);
+    SERIAL.print((char) STK_NOSYNC);
   }
 }
 
 void breply(uint8_t b) {
   if (CRC_EOP == getch()) {
-    SERIAL.print((char)STK_INSYNC);
-    SERIAL.print((char)b);
-    SERIAL.print((char)STK_OK);
+    SERIAL.print((char) STK_INSYNC);
+    SERIAL.print((char) b);
+    SERIAL.print((char) STK_OK);
   } else {
     error++;
-    SERIAL.print((char)STK_NOSYNC);
+    SERIAL.print((char) STK_NOSYNC);
   }
 }
 
@@ -372,25 +372,22 @@ void get_version(uint8_t c) {
 void set_parameters() {
   // call this after reading parameter packet into buff[]
   param.devicecode = buff[0];
-  param.revision   = buff[1];
-  param.progtype   = buff[2];
-  param.parmode    = buff[3];
-  param.polling    = buff[4];
-  param.selftimed  = buff[5];
-  param.lockbytes  = buff[6];
-  param.fusebytes  = buff[7];
-  param.flashpoll  = buff[8];
+  param.revision = buff[1];
+  param.progtype = buff[2];
+  param.parmode = buff[3];
+  param.polling = buff[4];
+  param.selftimed = buff[5];
+  param.lockbytes = buff[6];
+  param.fusebytes = buff[7];
+  param.flashpoll = buff[8];
   // ignore buff[9] (= buff[8])
   // following are 16 bits (big endian)
   param.eeprompoll = beget16(&buff[10]);
-  param.pagesize   = beget16(&buff[12]);
+  param.pagesize = beget16(&buff[12]);
   param.eepromsize = beget16(&buff[14]);
 
   // 32 bits flashsize (big endian)
-  param.flashsize = buff[16] * 0x01000000
-                    + buff[17] * 0x00010000
-                    + buff[18] * 0x00000100
-                    + buff[19];
+  param.flashsize = buff[16] * 0x01000000 + buff[17] * 0x00010000 + buff[18] * 0x00000100 + buff[19];
 
   // AVR devices have active low reset, AT89Sx are active high
   rst_active_high = (param.devicecode >= 0xe0);
@@ -445,19 +442,16 @@ void universal() {
 }
 
 void flash(uint8_t hilo, unsigned int addr, uint8_t data) {
-  spi_transaction(0x40 + 8 * hilo,
-                  addr >> 8 & 0xFF,
-                  addr & 0xFF,
-                  data);
+  spi_transaction(0x40 + 8 * hilo, addr >> 8 & 0xFF, addr & 0xFF, data);
 }
 void commit(unsigned int addr) {
   if (PROG_FLICKER) {
-    prog_lamp(LOW);
+    prog_lamp (LOW);
   }
   spi_transaction(0x4C, (addr >> 8) & 0xFF, addr & 0xFF, 0);
   if (PROG_FLICKER) {
     delay(PTIME);
-    prog_lamp(HIGH);
+    prog_lamp (HIGH);
   }
 }
 
@@ -476,7 +470,6 @@ unsigned int current_page() {
   }
   return here;
 }
-
 
 void write_flash(int length) {
   fill(length);
@@ -528,13 +521,13 @@ uint8_t write_eeprom(unsigned int length) {
 uint8_t write_eeprom_chunk(unsigned int start, unsigned int length) {
   // this writes byte-by-byte, page writing may be faster (4 bytes at a time)
   fill(length);
-  prog_lamp(LOW);
+  prog_lamp (LOW);
   for (unsigned int x = 0; x < length; x++) {
     unsigned int addr = start + x;
     spi_transaction(0xC0, (addr >> 8) & 0xFF, addr & 0xFF, buff[x]);
     delay(45);
   }
-  prog_lamp(HIGH);
+  prog_lamp (HIGH);
   return STK_OK;
 }
 
@@ -549,7 +542,7 @@ void program_page() {
     return;
   }
   if (memtype == 'E') {
-    result = (char)write_eeprom(length);
+    result = (char) write_eeprom(length);
     if (CRC_EOP == getch()) {
       SERIAL.print((char) STK_INSYNC);
       SERIAL.print(result);
@@ -559,15 +552,12 @@ void program_page() {
     }
     return;
   }
-  SERIAL.print((char)STK_FAILED);
+  SERIAL.print((char) STK_FAILED);
   return;
 }
 
 uint8_t flash_read(uint8_t hilo, unsigned int addr) {
-  return spi_transaction(0x20 + hilo * 8,
-                         (addr >> 8) & 0xFF,
-                         addr & 0xFF,
-                         0);
+  return spi_transaction(0x20 + hilo * 8, (addr >> 8) & 0xFF, addr & 0xFF, 0);
 }
 
 char flash_read_page(int length) {
@@ -593,7 +583,7 @@ char eeprom_read_page(int length) {
 }
 
 void read_page() {
-  char result = (char)STK_FAILED;
+  char result = (char) STK_FAILED;
   int length = 256 * getch();
   length += getch();
   char memtype = getch();
@@ -603,8 +593,10 @@ void read_page() {
     return;
   }
   SERIAL.print((char) STK_INSYNC);
-  if (memtype == 'F') result = flash_read_page(length);
-  if (memtype == 'E') result = eeprom_read_page(length);
+  if (memtype == 'F')
+    result = flash_read_page(length);
+  if (memtype == 'E')
+    result = eeprom_read_page(length);
   SERIAL.print(result);
 }
 
@@ -626,7 +618,6 @@ void read_signature() {
 //////////////////////////////////////////
 //////////////////////////////////////////
 
-
 ////////////////////////////////////
 ////////////////////////////////////
 void avrisp() {
@@ -641,8 +632,7 @@ void avrisp() {
         SERIAL.print((char) STK_INSYNC);
         SERIAL.print("AVR ISP");
         SERIAL.print((char) STK_OK);
-      }
-      else {
+      } else {
         error++;
         SERIAL.print((char) STK_NOSYNC);
       }
@@ -701,19 +691,19 @@ void avrisp() {
       read_signature();
       break;
 
-    // expecting a command, not CRC_EOP
-    // this is how we can get back in sync
+      // expecting a command, not CRC_EOP
+      // this is how we can get back in sync
     case CRC_EOP:
       error++;
       SERIAL.print((char) STK_NOSYNC);
       break;
 
-    // anything else we will return STK_UNKNOWN
+      // anything else we will return STK_UNKNOWN
     default:
       error++;
       if (CRC_EOP == getch())
-        SERIAL.print((char)STK_UNKNOWN);
+        SERIAL.print((char) STK_UNKNOWN);
       else
-        SERIAL.print((char)STK_NOSYNC);
+        SERIAL.print((char) STK_NOSYNC);
   }
 }

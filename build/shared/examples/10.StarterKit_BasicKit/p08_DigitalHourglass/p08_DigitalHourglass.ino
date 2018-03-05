@@ -1,22 +1,22 @@
 /*
-  Arduino Starter Kit example
-  Project 8 - Digital Hourglass
+ Arduino Starter Kit example
+ Project 8 - Digital Hourglass
 
-  This sketch is written to accompany Project 8 in the Arduino Starter Kit
+ This sketch is written to accompany Project 8 in the Arduino Starter Kit
 
-  Parts required:
-  - 10 kilohm resistor
-  - six 220 ohm resistors
-  - six LEDs
-  - tilt switch
+ Parts required:
+ - 10 kilohm resistor
+ - six 220 ohm resistors
+ - six LEDs
+ - tilt switch
 
-  created 13 Sep 2012
-  by Scott Fitzgerald
+ created 13 Sep 2012
+ by Scott Fitzgerald
 
-  http://www.arduino.cc/starterKit
+ http://www.arduino.cc/starterKit
 
-  This example code is part of the public domain.
-*/
+ This example code is part of the public domain.
+ */
 
 // named constant for the switch pin
 const int switchPin = 8;

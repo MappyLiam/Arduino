@@ -1,16 +1,16 @@
 /*
-  String Case changes
+ String Case changes
 
-  Examples of how to change the case of a String
+ Examples of how to change the case of a String
 
-  created 27 Jul 2010
-  modified 2 Apr 2012
-  by Tom Igoe
+ created 27 Jul 2010
+ modified 2 Apr 2012
+ by Tom Igoe
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/StringCaseChanges
-*/
+ http://www.arduino.cc/en/Tutorial/StringCaseChanges
+ */
 
 void setup() {
   // Open serial communications and wait for port to open:
@@ -37,7 +37,7 @@ void loop() {
   stringTwo.toLowerCase();
   Serial.println(stringTwo);
 
-
   // do nothing while true:
-  while (true);
+  while (true)
+    ;
 }

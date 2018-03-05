@@ -1,17 +1,17 @@
 /*
-  Adding Strings together
+ Adding Strings together
 
-  Examples of how to add Strings together
-  You can also add several different data types to String, as shown here:
+ Examples of how to add Strings together
+ You can also add several different data types to String, as shown here:
 
-  created 27 Jul 2010
-  modified 2 Apr 2012
-  by Tom Igoe
+ created 27 Jul 2010
+ modified 2 Apr 2012
+ by Tom Igoe
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/StringAdditionOperator
-*/
+ http://www.arduino.cc/en/Tutorial/StringAdditionOperator
+ */
 
 // declare three Strings:
 String stringOne, stringTwo, stringThree;
@@ -33,7 +33,7 @@ void setup() {
 
 void loop() {
   // adding a constant integer to a String:
-  stringThree =  stringOne + 123;
+  stringThree = stringOne + 123;
   Serial.println(stringThree);    // prints "You added 123"
 
   // adding a constant long integer to a String:
@@ -41,11 +41,11 @@ void loop() {
   Serial.println(stringThree);    // prints "You added 123456789"
 
   // adding a constant character to a String:
-  stringThree =  stringOne + 'A';
+  stringThree = stringOne + 'A';
   Serial.println(stringThree);    // prints "You added A"
 
   // adding a constant string to a String:
-  stringThree =  stringOne +  "abc";
+  stringThree = stringOne + "abc";
   Serial.println(stringThree);    // prints "You added abc"
 
   stringThree = stringOne + stringTwo;
@@ -54,7 +54,7 @@ void loop() {
   // adding a variable integer to a String:
   int sensorValue = analogRead(A0);
   stringOne = "Sensor value: ";
-  stringThree = stringOne  + sensorValue;
+  stringThree = stringOne + sensorValue;
   Serial.println(stringThree);    // prints "Sensor Value: 401" or whatever value analogRead(A0) has
 
   // adding a variable long integer to a String:
@@ -63,5 +63,6 @@ void loop() {
   Serial.println(stringThree);    // prints "The millis: 345345" or whatever value millis() has
 
   // do nothing while true:
-  while (true);
+  while (true)
+    ;
 }

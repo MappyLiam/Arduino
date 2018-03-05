@@ -1,19 +1,19 @@
 /*
-  Multiple tone player
+ Multiple tone player
 
-  Plays multiple tones on multiple pins in sequence
+ Plays multiple tones on multiple pins in sequence
 
-  circuit:
-  - three 8 ohm speakers on digital pins 6, 7, and 8
+ circuit:
+ - three 8 ohm speakers on digital pins 6, 7, and 8
 
-  created 8 Mar 2010
-  by Tom Igoe
-  based on a snippet from Greg Borenstein
+ created 8 Mar 2010
+ by Tom Igoe
+ based on a snippet from Greg Borenstein
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/Tone4
-*/
+ http://www.arduino.cc/en/Tutorial/Tone4
+ */
 
 void setup() {
 

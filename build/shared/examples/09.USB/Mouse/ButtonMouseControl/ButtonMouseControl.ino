@@ -1,27 +1,27 @@
 /*
-  ButtonMouseControl
+ ButtonMouseControl
 
-  For Leonardo and Due boards only.
+ For Leonardo and Due boards only.
 
-  Controls the mouse from five pushbuttons on an Arduino Leonardo, Micro or Due.
+ Controls the mouse from five pushbuttons on an Arduino Leonardo, Micro or Due.
 
-  Hardware:
-  - five pushbuttons attached to D2, D3, D4, D5, D6
+ Hardware:
+ - five pushbuttons attached to D2, D3, D4, D5, D6
 
-  The mouse movement is always relative. This sketch reads four pushbuttons,
-  and uses them to set the movement of the mouse.
+ The mouse movement is always relative. This sketch reads four pushbuttons,
+ and uses them to set the movement of the mouse.
 
-  WARNING: When you use the Mouse.move() command, the Arduino takes over your
-  mouse! Make sure you have control before you use the mouse commands.
+ WARNING: When you use the Mouse.move() command, the Arduino takes over your
+ mouse! Make sure you have control before you use the mouse commands.
 
-  created 15 Mar 2012
-  modified 27 Mar 2012
-  by Tom Igoe
+ created 15 Mar 2012
+ modified 27 Mar 2012
+ by Tom Igoe
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/ButtonMouseControl
-*/
+ http://www.arduino.cc/en/Tutorial/ButtonMouseControl
+ */
 
 #include "Mouse.h"
 
@@ -34,7 +34,6 @@ const int mouseButton = 6;
 
 int range = 5;              // output range of X or Y movement; affects movement speed
 int responseDelay = 10;     // response delay of the mouse, in ms
-
 
 void setup() {
   // initialize the buttons' inputs:
@@ -56,8 +55,8 @@ void loop() {
   int clickState = digitalRead(mouseButton);
 
   // calculate the movement distance based on the button states:
-  int  xDistance = (leftState - rightState) * range;
-  int  yDistance = (upState - downState) * range;
+  int xDistance = (leftState - rightState) * range;
+  int yDistance = (upState - downState) * range;
 
   // if X or Y is non-zero, move:
   if ((xDistance != 0) || (yDistance != 0)) {

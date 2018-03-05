@@ -1,16 +1,16 @@
 /*
-  String replace()
+ String replace()
 
-  Examples of how to replace characters or substrings of a String
+ Examples of how to replace characters or substrings of a String
 
-  created 27 Jul 2010
-  modified 2 Apr 2012
-  by Tom Igoe
+ created 27 Jul 2010
+ modified 2 Apr 2012
+ by Tom Igoe
 
-  This example code is in the public domain.
+ This example code is in the public domain.
 
-  http://www.arduino.cc/en/Tutorial/StringReplace
-*/
+ http://www.arduino.cc/en/Tutorial/StringReplace
+ */
 
 void setup() {
   // Open serial communications and wait for port to open:
@@ -46,5 +46,6 @@ void loop() {
   Serial.println("l33tspeak: " + leetString);
 
   // do nothing while true:
-  while (true);
+  while (true)
+    ;
 }
